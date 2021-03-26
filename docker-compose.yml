@@ -29,7 +29,7 @@ services:
       - default
     ports:
       - "1026:1026"
-    command: -dbhost mongo-db -connectionMemory 256 -maxConnections 10000 -disableMetrics -logLevel ERROR -writeConcern 0 -dbPoolSize 200
+    command: -dbhost mongo-db -maxConnections 10000 -logLevel ERROR -writeConcern 0 -statTiming -notificationMode persistent
     healthcheck:
       test: curl --fail -s http://orion:1026/version || exit 1
 
