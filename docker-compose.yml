@@ -32,6 +32,7 @@ services:
     command: -dbhost mongo-db -maxConnections 10000 -logLevel ERROR -writeConcern 0 -statTiming -notificationMode persistent
     healthcheck:
       test: curl --fail -s http://orion:1026/version || exit 1
+    restart: unless-stopped
 
 
   # Databases
@@ -52,7 +53,8 @@ services:
     healthcheck:
       test: |
         host=`hostname --ip-address || echo '127.0.0.1'`; 
-        mongo --quiet $host/test --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)' && echo 0 || echo 1    
+        mongo --quiet $host/test --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)' && echo 0 || echo 1
+    restart: unless-stopped
 
 networks:
   default:
